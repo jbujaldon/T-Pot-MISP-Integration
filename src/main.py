@@ -1,5 +1,5 @@
 from dotenv import load_dotenv
-from misp.misp import MISP
+from misp.misp_adapter import MISPTPotAdapter
 from tpot.tpot_elastic import TPotElasticContext
 
 import os
@@ -12,17 +12,17 @@ if __name__ == '__main__':
     # Get the user credentials in a save manner of TPOT Elasticsearch
     elastic_user = os.environ['ELASTIC_USER']
     elastic_pwd = os.environ['ELASTIC_PASSWORD']
-    elastic_url = 'https://20.26.120.58:64297/es'
+    elastic_url = os.environ['ELASTIC_URL']
 
     # Creation of Elasticsearch client
-    es = TPotElasticContext(elastic_url, elastic_user, elastic_pwd)
-    print(es.fetch_data())
+    tpot = TPotElasticContext(elastic_url, elastic_user, elastic_pwd)
     
     # Get the user credentials of MISP instance
     misp_api_key = os.environ['MISP_API_KEY']
-    misp_url = 'https://192.168.1.200'
+    misp_url = os.environ['MISP_URL']
 
-    # Connect to MISP API Rest 
-    # misp = MISP(misp_url, misp_api_key)
+    # Connect T-Pot data with MISP
+    adapter = MISPTPotAdapter(misp_url, misp_api_key, tpot)
+    adapter.parse(tpot.fetch_data())
 
 

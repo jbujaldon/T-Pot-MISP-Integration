@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 
 class TPotProperty(ABC):
-    def __init__(self, tag) -> None:
+    def __init__(self, tag: str) -> None:
         self._tag = tag
 
     @property

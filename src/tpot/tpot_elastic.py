@@ -3,9 +3,11 @@ from elasticsearch import Elasticsearch
 from tpot.tpot_parser import JSONExportTPot
 from tpot import models
 
+import itertools
+
 
 class HoneypotStrategy(ABC):
-    def __init__(self, es):
+    def __init__(self, es: Elasticsearch):
         self._es = es
 
     @property
@@ -17,8 +19,8 @@ class HoneypotStrategy(ABC):
     def request(self):
         pass
 
-    def perform_request(self, query):
-        response = self._es.search(query={"query_string": {"query": query}}, size=200)
+    def perform_request(self, query: str):
+        response = self._es.search(query={"query_string": {"query": query}}, size=10)
         hits = response['hits']['hits']
         result_data = list()
 
@@ -37,7 +39,6 @@ class Tanner(HoneypotStrategy):
         return [
             models.HoneypotType("type"), 
             models.Country("country"),
-            models.Credentials("credentials"),
             models.DestPort("dest-port"),
             models.HTTPMethod("http-method"),
             models.IPReputation("ip-reputation"),
@@ -100,7 +101,7 @@ class Fatt(HoneypotStrategy):
 
 
 class TPotElasticContext:
-    def __init__(self, elastic_url, elastic_user, elastic_pwd):
+    def __init__(self, elastic_url: str, elastic_user: str, elastic_pwd: str):
         self._es = Elasticsearch(elastic_url, basic_auth=(elastic_user, elastic_pwd), verify_certs=False)
         self._strategies = [
             Tanner(self._es),
@@ -110,4 +111,4 @@ class TPotElasticContext:
 
     def fetch_data(self):
         result = [strategy.request() for strategy in self._strategies]
-        return result
+        return list(itertools.chain(*result))

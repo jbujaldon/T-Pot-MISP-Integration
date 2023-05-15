@@ -32,7 +32,7 @@ class TPotPropertiesInterface(ABC):
 
 
 class JSONExportTPot(TPotPropertiesInterface):
-    def __init__(self, source):
+    def __init__(self, source: dict):
         self._source = source
 
     def get_from_source(self, property):
