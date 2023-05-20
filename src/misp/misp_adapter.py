@@ -8,10 +8,8 @@ class MISPTPotAdapter(MISP):
 
     def parse(self, data: list):
         for event in data:
-            new_event = self.create_event(event['type'])
-            attributes = [self.create_attribute(tag, event[tag]) for tag in event]
-            for attr in attributes:
-                new_event.add_attribute(attr)
-            # self.save_event(new_event)
+            event_id = self.add_new_event(event['type'])
+            for tag in event:
+                self.add_new_attribute_to_event(event_id, tag, event[tag])
 
     

@@ -20,7 +20,7 @@ class HoneypotStrategy(ABC):
         pass
 
     def perform_request(self, query: str):
-        response = self._es.search(query={"query_string": {"query": query}}, size=10)
+        response = self._es.search(query={"query_string": {"query": query}}, size=100)
         hits = response['hits']['hits']
         result_data = list()
 
@@ -67,8 +67,8 @@ class Suricata(HoneypotStrategy):
             models.Protocol("protocol"),
             models.SuricataSignature("suricata-signature"),
             models.Payload("payload"),
-            models.PayloadPrintable("payload-pritable"),
-            models.Files("files")
+            models.PayloadPrintable("payload-printable")
+            # models.Files("files")
         ]
     
     def request(self):
