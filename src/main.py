@@ -1,6 +1,6 @@
 from dotenv import load_dotenv
 from misp.misp_adapter import MISPTPotAdapter
-from tpot.tpot_elastic import TPotElasticContext
+from tpot.tpot_elastic import TPotElasticParser
 
 import os
 
@@ -15,7 +15,7 @@ if __name__ == '__main__':
     elastic_url = os.environ['ELASTIC_URL']
 
     # Creation of Elasticsearch client
-    tpot = TPotElasticContext(elastic_url, elastic_user, elastic_pwd)
+    tpot = TPotElasticParser(elastic_url, elastic_user, elastic_pwd)
     
     # Get the user credentials of MISP instance
     misp_api_key = os.environ['MISP_API_KEY']

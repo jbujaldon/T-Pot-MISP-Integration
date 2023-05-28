@@ -100,7 +100,7 @@ class Fatt(HoneypotStrategy):
         return self.perform_request("Fatt")
 
 
-class TPotElasticContext:
+class TPotElasticParser:
     def __init__(self, elastic_url: str, elastic_user: str, elastic_pwd: str):
         self._es = Elasticsearch(elastic_url, basic_auth=(elastic_user, elastic_pwd), verify_certs=False)
         self._strategies = [
