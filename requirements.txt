@@ -1,0 +1,17 @@
+attrs==23.1.0
+certifi==2023.5.7
+charset-normalizer==3.1.0
+Deprecated==1.2.14
+elastic-transport==8.4.0
+elasticsearch==8.8.0
+idna==3.4
+jsonschema==4.17.3
+publicsuffixlist==0.10.0.20230506
+pymisp==2.4.171
+pyrsistent==0.19.3
+python-dateutil==2.8.2
+python-dotenv==1.0.0
+requests==2.31.0
+six==1.16.0
+urllib3==1.26.16
+wrapt==1.15.0

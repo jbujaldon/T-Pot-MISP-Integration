@@ -2,6 +2,7 @@ from abc import ABC, abstractmethod
 from pymisp import PyMISP
 from pymisp.mispevent import MISPEvent, MISPAttribute
 
+
 class MISP:
     def __init__(self, misp_url, misp_api_key):
         self._misp = PyMISP(misp_url, misp_api_key, False)
@@ -28,7 +29,6 @@ class MISP:
                 attribute.value = value
                 return self._misp.add_attribute(event_id, attribute, pythonify=True)
     
-
     def get_attribute_type(self, tag: str):
         if tag == 'country':
             return 'country-of-residence'
